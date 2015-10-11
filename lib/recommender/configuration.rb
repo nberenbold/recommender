@@ -20,11 +20,17 @@ module Recommender
     # default: 2
     attr_accessor :timeout
 
+    # Api Version
+    #
+    # default: v1
+    attr_accessor :api_version
+
     def initialize
-      @api_key  = nil
-      @user_id  = nil
-      @api_type = :json
-      @timeout  = 2
+      @api_key     = nil
+      @user_id     = nil
+      @api_type    = :json
+      @timeout     = 2
+      @api_version = "v1"
     end
   end
 
