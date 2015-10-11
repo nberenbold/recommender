@@ -12,3 +12,4 @@ require 'recommender/api_request'
 require 'recommender/controller_helper'
 
 ActionController::Base.send :include, Recommender::ControllerHelper
+ActionView::Base.send :include, Recommender::ViewHelper
