@@ -26,8 +26,7 @@ module Recommender
       object_type = options.delete(:object_type)
       event       = options.delete(:event)
 
-      content_tag :script do
-        "(function() {
+      script = "(function() {
           if (window.track_recommendation) {
             window.track_recommendation(#{Recommender.config.user_id}, [
               { event: \"#{event}\", object: \"#{object_id}\", type: \"#{object_type}\", user: \"#{user_id}\" }
@@ -43,7 +42,10 @@ module Recommender
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
           }
         })();".html_safe
-      end
+
+      return script if request.format != "text/javascript"
+
+      content_tag :script, script
     end
   end
 end
