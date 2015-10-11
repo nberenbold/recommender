@@ -1,23 +1,23 @@
 module Recommender
   module ViewHelper
-    def track_view item, user_id
-      get_recommendation_script event: "view", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
+    def track_view item, user_id, options = {}
+      get_recommendation_script event: "view", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id, script: true
     end
 
-    def track_like item, user_id
-      get_recommendation_script event: "like", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
+    def track_like item, user_id, options = {}
+      get_recommendation_script event: "like", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id, script: true
     end
 
-    def track_dislike item, user_id
-      get_recommendation_script event: "dislike", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
+    def track_dislike item, user_id, options = {}
+      get_recommendation_script event: "dislike", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id, script: true
     end
 
-    def track_favorite item, user_id
-      get_recommendation_script event: "favorite", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
+    def track_favorite item, user_id, options = {}
+      get_recommendation_script event: "favorite", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id, script: true
     end
 
-    def track_buy item, user_id
-      get_recommendation_script event: "buy", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
+    def track_buy item, user_id, options = {}
+      get_recommendation_script event: "buy", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id, script: true
     end
 
     def get_recommendation_script options = {}
@@ -25,6 +25,7 @@ module Recommender
       object_id   = options.delete(:object_id)
       object_type = options.delete(:object_type)
       event       = options.delete(:event)
+      use_script  = options.delete(:script) || false
 
       script = "(function() {
           if (window.track_recommendation) {
@@ -43,9 +44,9 @@ module Recommender
           }
         })();".html_safe
 
-      return script if request.format != "text/javascript"
+        return script unless use_script
 
-      content_tag :script, script
+        content_tag :script, script
     end
   end
 end
