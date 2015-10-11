@@ -43,6 +43,7 @@ module Recommender
       use_script  = options[:script] == nil ? true : options[:script]
 
       script = "
+        window.track_recommendation = window.track_recommendation || [];
         window.track_recommendation.push([
           { event: \"setAccount\", value: \"#{Recommender.config.user_id}\"},
           { event: \"#{event}\", object: \"#{object_id}\", type: \"#{object_type}\", user: \"#{user_id}\" }
