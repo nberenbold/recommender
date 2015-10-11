@@ -1,6 +1,10 @@
 module Recommender
   module ViewHelper
-    def track_recommendation_event options = {}
+    def track_view item, user_id
+      get_recommendation_script event: "view", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
+    end
+
+    def get_recommendation_script options = {}
       user_id     = options.delete(:user_id)
       object_id   = options.delete(:object_id)
       object_type = options.delete(:object_type)
@@ -16,7 +20,7 @@ module Recommender
             ]);
           }
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-        })();"
+        })();".html_safe
       end
     end
   end
