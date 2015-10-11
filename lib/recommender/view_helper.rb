@@ -29,7 +29,7 @@ module Recommender
       content_tag :script do
         "(function() {
           var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-          po.src = '//track.recommendation.niv-ventures.com/script/v1.js';
+          po.src = '//static.recommendation.niv-ventures.com/script/v1.js';
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
         })();".html_safe
       end
