@@ -31,27 +31,35 @@ module Recommender
       object_type = options.delete(:object_type)
       event       = options.delete(:event)
       use_script  = options[:script] == nil ? true : options[:script]
+      included    = options.delete(:included)
 
-      script = "(function() {
-          if (window.track_recommendation) {
-            window.track_recommendation(#{Recommender.config.user_id}, [
-              { event: \"#{event}\", object: \"#{object_id}\", type: \"#{object_type}\", user: \"#{user_id}\" }
-            ]);
-          } else {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = '//v1.recommendation.niv-ventures.com/script.js';
-            po.onload = function() {
-              window.track_recommendation(#{Recommender.config.user_id}, [
-                { event: \"#{event}\", object: \"#{object_id}\", type: \"#{object_type}\", user: \"#{user_id}\" }
-              ]);
+      tracking_code = "
+        window.track_recommendation(#{Recommender.config.user_id}, [
+          { event: \"#{event}\", object: \"#{object_id}\", type: \"#{object_type}\", user: \"#{user_id}\" }
+        ]);
+      "
+
+      unless included
+        script = "
+          (function() {
+            if (window.track_recommendation) {
+              #{tracking_code}
+            } else {
+              var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+              po.src = '//v1.recommendation.niv-ventures.com/script.js';
+              po.onload = function() {
+                #{tracking_code}
+              }
+              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
             }
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-          }
-        })();".html_safe
+          })();".html_safe
+      else
+        script = tracking_code
+      end
 
-        return script unless use_script
+      return script unless use_script
 
-        content_tag :script, script
+      content_tag :script, script
     end
   end
 end
