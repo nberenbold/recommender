@@ -8,9 +8,12 @@ module Recommender
 
     def recommendations_for item, options = {}
       limit = options.delete(:limit) || 4
+      api.get("predict", item.class.to_s.downcase, item.id, limit)
+    end
 
-      result = ApiRequest.new(type: Recommender.config.api_type, api_key: Recommender.config.api_key, user_id: Recommender.config.user_id).get("predict", item.class.to_s.downcase, item.id, limit)
-      JSON.parse(result)
+  protected
+    def api
+      ApiRequest.new
     end
   end
 end

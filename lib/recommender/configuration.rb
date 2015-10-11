@@ -15,10 +15,16 @@ module Recommender
     # default: json
     attr_accessor :api_type
 
+    # Read Timeout
+    #
+    # default: 2
+    attr_accessor :timeout
+
     def initialize
       @api_key  = nil
       @user_id  = nil
       @api_type = :json
+      @timeout  = 2
     end
   end
 
