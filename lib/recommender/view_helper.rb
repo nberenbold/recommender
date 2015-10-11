@@ -1,23 +1,28 @@
 module Recommender
   module ViewHelper
     def track_view item, user_id, options = {}
-      get_recommendation_script event: "view", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id, script: true
+      options = options.merge(event: "view", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id)
+      get_recommendation_script options
     end
 
     def track_like item, user_id, options = {}
-      get_recommendation_script event: "like", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id, script: true
+      options = options.merge(event: "like", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id)
+      get_recommendation_script options
     end
 
     def track_dislike item, user_id, options = {}
-      get_recommendation_script event: "dislike", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id, script: true
+      options = options.merge(event: "dislike", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id)
+      get_recommendation_script options
     end
 
     def track_favorite item, user_id, options = {}
-      get_recommendation_script event: "favorite", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id, script: true
+      options = options.merge(event: "favorite", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id)
+      get_recommendation_script options
     end
 
     def track_buy item, user_id, options = {}
-      get_recommendation_script event: "buy", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id, script: true
+      options = options.merge(event: "buy", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id)
+      get_recommendation_script options
     end
 
     def get_recommendation_script options = {}
@@ -25,7 +30,7 @@ module Recommender
       object_id   = options.delete(:object_id)
       object_type = options.delete(:object_type)
       event       = options.delete(:event)
-      use_script  = options.delete(:script) || false
+      use_script  = options[:script] == nil ? true : options[:script]
 
       script = "(function() {
           if (window.track_recommendation) {
