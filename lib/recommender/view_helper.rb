@@ -37,7 +37,7 @@ module Recommender
         window.track_recommendation(#{Recommender.config.user_id}, [
           { event: \"#{event}\", object: \"#{object_id}\", type: \"#{object_type}\", user: \"#{user_id}\" }
         ]);
-      "
+      ".html_safe
 
       unless included
         script = "
