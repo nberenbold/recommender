@@ -10,6 +10,7 @@ require 'recommender/configuration'
 require 'recommender/request'
 require 'recommender/api_request'
 require 'recommender/controller_helper'
+require 'recommender/view_helper'
 
 ActionController::Base.send :include, Recommender::ControllerHelper
 ActionView::Base.send :include, Recommender::ViewHelper
