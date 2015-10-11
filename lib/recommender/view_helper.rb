@@ -4,6 +4,22 @@ module Recommender
       get_recommendation_script event: "view", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
     end
 
+    def track_like item, user_id
+      get_recommendation_script event: "like", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
+    end
+
+    def track_dislike item, user_id
+      get_recommendation_script event: "dislike", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
+    end
+
+    def track_favorite item, user_id
+      get_recommendation_script event: "favorite", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
+    end
+
+    def track_buy item, user_id
+      get_recommendation_script event: "buy", object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id
+    end
+
     def get_recommendation_script options = {}
       user_id     = options.delete(:user_id)
       object_id   = options.delete(:object_id)
