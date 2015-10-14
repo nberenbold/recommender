@@ -40,9 +40,10 @@ module Recommender
 
       timeout(Recommender.config.timeout) {
         json_string = open(url).read
-        return JSON.parse(json_string)
+        return JSON.parse(json_string) rescue []
       }
-      nil
+
+      []
     end
 
     def handle_error error
