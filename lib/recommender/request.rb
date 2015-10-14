@@ -24,13 +24,15 @@ module Recommender
       case Recommender.config.api_type
       when :json
         begin
-          get_json(method, class_name, id, limit)
+          return get_json(method, class_name, id, limit)
         rescue => e
           handle_error(e)
         end
       else
-        raise "Unknown Api Type"
+        raise "Unknown Api Type" if Rails.env.development?
       end
+
+      []
     end
 
     def get_json method, class_name, id, limit
