@@ -38,6 +38,8 @@ module Recommender
       url += [method, class_name, id.to_s].reject(&:blank?).join("/")
       url += ".json?key=#{Recommender.config.api_key}&limit=#{limit}"
 
+      Logger.new("log/simply_suggest.log").info(url) rescue nil if Rails.env.development?
+
       timeout(Recommender.config.timeout) {
         json_string = open(url).read
         return JSON.parse(json_string) rescue []
