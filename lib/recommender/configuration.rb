@@ -25,12 +25,18 @@ module Recommender
     # default: v1
     attr_accessor :api_version
 
+    # Api Domain
+    #
+    # default: simply-suggest.com
+    attr_accessor :domain
+
     def initialize
       @api_key     = nil
       @user_id     = nil
       @api_type    = :json
       @timeout     = 2
       @api_version = "v1"
+      @domain      = "simply-suggest.com"
     end
   end
 
