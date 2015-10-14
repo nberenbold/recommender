@@ -8,7 +8,7 @@ module Recommender
     # options : hash [optional]
     #
     def recommendations_for item, options = {}
-      request_object.recommendations_for item, options = {}
+      request_object.recommendations_for item, options
     end
 
     # returns recommendations for the user_id
@@ -17,7 +17,7 @@ module Recommender
     # options : hash [optional]
     #
     def user_recommendations user_id, options = {}
-      request_object.user_recommendations user_id, options = {}
+      request_object.user_recommendations user_id, options
     end
 
   protected
