@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Api::Calls" do
-  subject { Recommender::ApiRequest.new }
+  subject { Recommender::Request.new }
 
   context 'api calls' do
     it 'should return an array of ids' do

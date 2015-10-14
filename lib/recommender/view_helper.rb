@@ -1,7 +1,7 @@
 module Recommender
   module ViewHelper
     %w[view like dislike favorite buy basket].each do |action|
-      define_method "track_#{action}", item, user_id, options = {}
+      define_method "track_#{action}" do |item, user_id, options = {}|
         options = options.merge(event: action, object_type: item.class.to_s.downcase, object_id: item.id, user_id: user_id)
         get_tracking_code options
       end
