@@ -51,7 +51,7 @@ module Recommender
     def handle_error error
       case error.class.to_s
       when "OpenURI::HTTPError"
-        raise "Wrong Api-Key provided"
+        raise "Wrong Api-Key provided" if Rails.env.development?
       when "Timeout::Error"
 
       end
