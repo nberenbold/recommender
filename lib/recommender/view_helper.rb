@@ -7,11 +7,18 @@ module Recommender
       end
     end
 
-    def track_recommendation_click source_id, destination_id, user_id, klass
-      "window.track_recommendation = window.track_recommendation || [];
-       window.track_recommendation.push([
-         { event: \"trackClick\", type: \"#{klass}\", source: \"#{source_id}\", destination: \"#{destination_id}\", user: \"#{user_id}\" },
-       ]);".html_safe
+    def track_recommendation_click source_id, destination_id, user_id, klass, options = {}
+      use_script  = options[:script] == nil ? true : options[:script]
+
+      script = "
+        window.track_recommendation = window.track_recommendation || [];
+        window.track_recommendation.push([
+          { event: \"trackClick\", type: \"#{klass}\", source: \"#{source_id}\", destination: \"#{destination_id}\", user: \"#{user_id}\" },
+        ]);
+      ".html_safe
+
+      return script unless use_script
+      content_tag :script, script
     end
 
     def get_recommendation_include
