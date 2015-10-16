@@ -7,6 +7,15 @@ module Recommender
       end
     end
 
+    def track_recommendation_click source_id, destination_id, user_id, klass
+      script = "
+        window.track_recommendation = window.track_recommendation || [];
+        window.track_recommendation.push([
+          { event: \"trackClick\", type: \"#{klass}\", source: \"#{source_id}\", destination: \"#{destination_id}\", user: \"#{user_id}\" },
+        ]);
+      "
+    end
+
     def get_recommendation_include
       content_tag :script do
         "(function() {

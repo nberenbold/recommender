@@ -53,7 +53,7 @@ module Recommender
     def handle_error error
       case error.class.to_s
       when "OpenURI::HTTPError"
-        Logger.new("log/simply_suggest.log").error(e.message + "\n" + e.backtrace.join("\n")) rescue nil
+        # TODO check response status
         raise "Wrong Api-Key provided" if Rails.env.development?
       when "Timeout::Error"
 
