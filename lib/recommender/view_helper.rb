@@ -11,7 +11,7 @@ module Recommender
       content_tag :script do
         "(function() {
           var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-          po.src = '//static.#{Recommender.config.domain}/script/v1.js';
+          po.src = '//static.#{Recommender.config.domain}/script/v2.js';
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
         })();".html_safe
       end
